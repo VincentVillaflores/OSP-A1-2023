@@ -8,6 +8,7 @@
 /* global variables if needed go here */
 int main(int argc, char** argv) {
     /* check command line arguments */
+    
     /* load the file and copy it to the destination */
     return EXIT_SUCCESS;
 }
