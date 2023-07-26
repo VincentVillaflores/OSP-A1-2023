@@ -12,4 +12,6 @@ writer::writer(const std::string& name) {}
 
 void writer::run() {}
 
-void writer::append(const std::string& line) {}
+void writer::append(const std::string& line) {
+    queue.push_back(line);
+}
