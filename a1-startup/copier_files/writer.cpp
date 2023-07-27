@@ -8,7 +8,9 @@
 /**
  * provide your implementation for the writer functions here
  **/
-writer::writer(const std::string& name) {}
+writer::writer(const std::string& name) {
+    std::ofstream out(name);
+}
 
 void writer::run() {}
 
