@@ -5,7 +5,7 @@
 #include "reader.h"
 #include <functional>
 
-reader::reader(const std::string& name, writer& mywriter) {
+reader::reader(const std::string& name, writer& mywriter) : reader(name, thewriter) {
     std::ifstream in(name);
 }
 
