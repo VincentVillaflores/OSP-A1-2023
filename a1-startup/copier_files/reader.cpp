@@ -18,6 +18,6 @@ void reader::run() {
         in.close();
     }
     else {
-        std::cerr << "Error: File could not be opened" << std::endl;
+        std::cerr << "Error: Infile could not be opened" << std::endl;
     }
 }
