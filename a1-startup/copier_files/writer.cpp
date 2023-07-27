@@ -17,9 +17,12 @@ void writer::run() {
         for (std::string line : queue){
             out << line << std::endl;
         }
-    }
 
-    out.close();
+        out.close();
+    }
+    else {
+        std::cerr << "Error: File could not be opened" << std::endl;
+    }
 }
 
 void writer::append(const std::string& line) {
