@@ -5,3 +5,10 @@
  ##
 
 # provide make targets here to build the two programs 
+all: copier mtcopier
+
+copier: copier_files/reader.cpp copier_files/writer.cpp copier_files/main.cpp
+	g++ -o copier copier_files/reader.cpp copier_files/writer.cpp copier_files/main.cpp -Wall -Werror -std=c++20
+
+mtcopier: mtcopier_files/reader.cpp mtcopier_files/writer.cpp mtcopier_files/main.cpp
+	g++ -o copier mtcopier_files/reader.cpp mtcopier_files/writer.cpp mtcopier_files/main.cpp -Wall -Werror -std=c++20
