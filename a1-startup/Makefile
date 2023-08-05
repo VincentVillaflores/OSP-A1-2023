@@ -8,7 +8,7 @@
 all: copier mtcopier
 
 copier: copier_files/reader.cpp copier_files/writer.cpp copier_files/main.cpp
-	g++ -o -g copier copier_files/reader.cpp copier_files/writer.cpp copier_files/main.cpp -Wall -Werror -std=c++20
+	g++ -o copier copier_files/reader.cpp copier_files/writer.cpp copier_files/main.cpp -Wall -Werror -std=c++20 -g
 
 mtcopier: mtcopier_files/reader.cpp mtcopier_files/writer.cpp mtcopier_files/main.cpp
-	g++ -o -g copier mtcopier_files/reader.cpp mtcopier_files/writer.cpp mtcopier_files/main.cpp -Wall -Werror -std=c++20
+	g++ -o mtcopier mtcopier_files/reader.cpp mtcopier_files/writer.cpp mtcopier_files/main.cpp -Wall -Werror -std=c++20 -g
