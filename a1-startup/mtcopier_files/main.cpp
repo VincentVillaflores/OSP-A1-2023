@@ -23,17 +23,27 @@ int main(int argc, char** argv) {
     /**
      * check command line arguments
      **/
+    int c = atoi(argv[1]); //must be between 25-100 check later
+    if (argc < 3) {
+        std::cout<<"Please pass an input and output file!"<<std::endl;
+    }
     /**
      * process command line arguments
      **/
-    /**
-     * initiliaze the reader and writer classes
-     **/
-    /**
-     * initialize the running of each thread. Note you just call run() on each
-     * object here, you'll call pthread_create itself in the run function.
-     **/
-
+    
+    else {
+        /**
+         * initiliaze the reader and writer classes
+         **/
+        writer.init(argv[2], c);
+        reader.init(argv[2], c, writers);
+        /**
+         * initialize the running of each thread. Note you just call run() on each
+         * object here, you'll call pthread_create itself in the run function.
+         **/
+        readers->run();
+        writers->run();
+    }
     /**
      *
      * have loop here waiting for the threads to bomplete. Please see

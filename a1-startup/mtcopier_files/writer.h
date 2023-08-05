@@ -20,7 +20,7 @@ class writer {
      * needs to be static. You can pass in instances into the function as
      * pointers though.
      **/
-    static void init(const std::string& name);
+    static void init(const std::string& name, const int count);
     static void* runner(void*);
     void run();
     static void append(const std::string& line);
@@ -28,5 +28,6 @@ class writer {
    private:
     static std::ofstream out;
     static std::deque<std::string> queue;
+    static int threadCount;
 };
 #endif
