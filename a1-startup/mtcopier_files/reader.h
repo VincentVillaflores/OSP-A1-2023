@@ -3,7 +3,7 @@
  * Principles
  **/
 #include <pthread.h>
-
+#include "writer.h"
 #include <fstream>
 #include <iostream>
 #include <string>
@@ -42,8 +42,7 @@ class reader {
     static std::ifstream in;
     static int threadCount;
     static writer* theWriter;
-    pthread_t threads[];
-
+    static std::string line;
     /**
      * There may be other private instance data you need so declare those here.
      **/

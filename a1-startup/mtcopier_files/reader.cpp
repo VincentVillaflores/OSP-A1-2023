@@ -15,37 +15,37 @@ void reader::init(const std::string& name, const int count, writer* myWriter){
     in.open(name);
     threadCount = count;
     theWriter = myWriter;
-    pthread_t threads[threadCount];
 }
 
 void reader::run() {
-
-    for(size_t i = 0; i < threadCount; ++i) {
-        if (pthread_create(threads + i, NULL, &runner, NULL) != 0){
-            std::cout<<"There was an error creating thread Number "<<threadCount<<std::endl;
-            exit(EXIT_FAILURE);
-        }
-    }
-
-    for(size_t i = 0; i < threadCount; ++i) {
-        if (pthread_join(threads[i], NULL) != 0){
-            std::cout<<"There was an error joining thread Number "<<threadCount<<std::endl;
-            exit(EXIT_FAILURE);
-        }
-    }
-        
-}
-
-void* reader::runner(void* arg) { 
     if (in.is_open()) {
-        std::string line;
+        pthread_t threads[threadCount];
+        int n = 0;
+        
         while (std::getline(in, line)){
-            theWriter->append(line);
+            if (pthread_create(threads + n++, NULL, &runner, NULL) != 0){
+                std::cout<<"There was an error creating thread Number "<<threadCount<<std::endl;
+                exit(EXIT_FAILURE);
+            }
+        }
+
+        for(size_t i = 0; i < n; ++i) {
+            if (pthread_join(threads[i], NULL) != 0){
+                std::cout<<"There was an error joining thread Number "<<threadCount<<std::endl;
+                exit(EXIT_FAILURE);
+            }
         }
         in.close();
     }
     else {
         std::cerr << "Error: Infile could not be opened" << std::endl;
     }
+
+    
+        
+}
+
+void* reader::runner(void* arg) { 
+    theWriter->append(line);
     return nullptr; 
-    }
+}

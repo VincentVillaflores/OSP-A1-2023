@@ -23,9 +23,12 @@ int main(int argc, char** argv) {
     /**
      * check command line arguments
      **/
-    int c = atoi(argv[1]); //must be between 25-100 check later
-    if (argc < 3) {
-        std::cout<<"Please pass an input and output file!"<<std::endl;
+    int c = atoi(argv[1]); 
+    if (argc < 4) {
+        std::cout<<"Please pass a thread count, an input and output file!"<<std::endl;
+    }
+    else if (25 > c || c > 100) {
+        std::cout<<"Thread count must be between 25 and 100!"<<std::endl;
     }
     /**
      * process command line arguments
@@ -35,8 +38,8 @@ int main(int argc, char** argv) {
         /**
          * initiliaze the reader and writer classes
          **/
-        writer.init(argv[2], c);
-        reader.init(argv[2], c, writers);
+        writers->init(argv[2], c);
+        readers->init(argv[3], c, writers);
         /**
          * initialize the running of each thread. Note you just call run() on each
          * object here, you'll call pthread_create itself in the run function.
