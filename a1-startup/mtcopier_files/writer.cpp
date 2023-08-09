@@ -9,6 +9,10 @@
 /**
  * implement these functions requred for the writer class
  **/
+int writer::threadCount = 0;
+std::ofstream writer::out;
+std::deque<std::string> writer::queue;
+
 void writer::init(const std::string& name, const int count) {
     out.open(name);
     threadCount = count;
@@ -19,7 +23,8 @@ void writer::run() {
         pthread_t threads[threadCount];
 
         for(int i = 0; i < threadCount; i++) {
-            if (pthread_create(threads + i++, NULL, &runner, NULL) != 0){
+            size_t tmp = i;
+            if (pthread_create(threads + i++, NULL, &runner, (void*) tmp) != 0){
                 std::cout<<"There was an error creating thread Number "<<threadCount<<std::endl;
                 exit(EXIT_FAILURE);
             }
@@ -42,6 +47,7 @@ void writer::run() {
 
 void* writer::runner(void* arg) { 
     while (!queue.empty()){
+        std::cout<<"Thread: "<<(size_t) arg<<" Line: "<<queue.front()<<std::endl;
         out << queue.front() << std::endl;
         queue.pop_front();
     }

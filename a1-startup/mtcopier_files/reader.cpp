@@ -10,6 +10,8 @@
  * implement the functions needed for this class
  **/
 std::ifstream reader::in;
+int reader::threadCount = 0;
+writer* reader::theWriter;
 
 void reader::init(const std::string& name, const int count, writer* myWriter){
     in.open(name);
@@ -22,7 +24,8 @@ void reader::run() {
         pthread_t threads[threadCount];
         
         for (int i = 0; i < threadCount; i++){
-            if (pthread_create(threads + i++, NULL, &runner, NULL) != 0){
+            size_t tmp = i;
+            if (pthread_create(threads + i++, NULL, &runner, (void*) tmp) != 0){
                 std::cout<<"There was an error creating thread Number "<<threadCount<<std::endl;
                 exit(EXIT_FAILURE);
             }
@@ -48,6 +51,7 @@ void* reader::runner(void* arg) {
     while (in.good()){ 
         std::string line;
         getline(in,line);
+        std::cout<<"Thread: "<<(size_t) arg<<" Line: "<<line<<std::endl;
         theWriter->append(line);
     }
     return nullptr; 
