@@ -14,18 +14,21 @@ int reader::threadCount = 0;
 writer* reader::theWriter;
 
 void reader::init(const std::string& name, const int count, writer* myWriter){
+    std::cout<<"reader::init()"<<std::endl;
     in.open(name);
     threadCount = count;
     theWriter = myWriter;
 }
 
 void reader::run() {
+    std::cout<<"reader::run()"<<std::endl;
     if (in.is_open()) {
         pthread_t threads[threadCount];
         
         for (int i = 0; i < threadCount; i++){
             size_t tmp = i;
-            if (pthread_create(threads + i++, NULL, &runner, (void*) tmp) != 0){
+            std::cout<<"i: "<<i<<std::endl;
+            if (pthread_create(threads + i, NULL, &runner, (void*) tmp) != 0){
                 std::cout<<"There was an error creating thread Number "<<threadCount<<std::endl;
                 exit(EXIT_FAILURE);
             }
@@ -48,6 +51,7 @@ void reader::run() {
 }
 
 void* reader::runner(void* arg) {
+    std::cout<<"reader::runner()"<<std::endl;
     while (in.good()){ 
         std::string line;
         getline(in,line);
