@@ -42,7 +42,6 @@ class reader {
     static std::ifstream in;
     static int threadCount;
     static writer* theWriter;
-    static std::string line;
     /**
      * There may be other private instance data you need so declare those here.
      **/
