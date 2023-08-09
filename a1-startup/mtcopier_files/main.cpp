@@ -16,6 +16,8 @@ void cleanup() {
     /**
      * perform any cleanup you need to do here for global pointers
      **/
+    delete readers;
+    delete writers;
 }
 
 int main(int argc, char** argv) {
@@ -38,8 +40,8 @@ int main(int argc, char** argv) {
         /**
          * initiliaze the reader and writer classes
          **/
-        writers->init(argv[2], c);
-        readers->init(argv[3], c, writers);
+        writers->init(argv[3], c);
+        readers->init(argv[2], c, writers);
         /**
          * initialize the running of each thread. Note you just call run() on each
          * object here, you'll call pthread_create itself in the run function.
@@ -53,5 +55,7 @@ int main(int argc, char** argv) {
      * section on avoiding busy waiting on the assignment specification to see
      * what need to be done here
       **/
+
+    cleanup();
     return EXIT_SUCCESS;
 }
