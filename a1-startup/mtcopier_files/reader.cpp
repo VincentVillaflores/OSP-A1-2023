@@ -12,6 +12,7 @@
 std::ifstream reader::in;
 int reader::threadCount = 0;
 writer* reader::theWriter;
+pthread_mutex_t reader::lock;
 
 void reader::init(const std::string& name, const int count, writer* myWriter){
     std::cout<<"reader::init()"<<std::endl;
@@ -24,7 +25,8 @@ void reader::run() {
     std::cout<<"reader::run()"<<std::endl;
     if (in.is_open()) {
         pthread_t threads[threadCount];
-        
+        pthread_mutex_init(&lock,0);
+
         for (int i = 0; i < threadCount; i++){
             size_t tmp = i;
             std::cout<<"i: "<<i<<std::endl;
@@ -41,6 +43,7 @@ void reader::run() {
             }
         }
         in.close();
+        pthread_mutex_destroy(&lock);
     }
     else {
         std::cerr << "Error: Infile could not be opened" << std::endl;
@@ -53,10 +56,12 @@ void reader::run() {
 void* reader::runner(void* arg) {
     std::cout<<"reader::runner()"<<std::endl;
     while (in.good()){ 
+        pthread_mutex_lock(&lock);
         std::string line;
         getline(in,line);
-        std::cout<<"Thread: "<<(size_t) arg<<" Line: "<<line<<std::endl;
         theWriter->append(line);
+        std::cout<<"ReaderThread: "<<(size_t) arg<<" Line: "<<line<<std::endl;
+        pthread_mutex_unlock(&lock);
     }
     return nullptr; 
 }

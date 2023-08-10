@@ -29,5 +29,7 @@ class writer {
     static std::ofstream out;
     static std::deque<std::string> queue;
     static int threadCount;
+    static pthread_mutex_t lock;
+    static pthread_mutex_t lock2;
 };
 #endif

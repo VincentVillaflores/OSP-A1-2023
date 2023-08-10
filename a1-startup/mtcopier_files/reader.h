@@ -42,6 +42,7 @@ class reader {
     static std::ifstream in;
     static int threadCount;
     static writer* theWriter;
+    static pthread_mutex_t lock;
     /**
      * There may be other private instance data you need so declare those here.
      **/
