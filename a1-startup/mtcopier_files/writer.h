@@ -24,12 +24,16 @@ class writer {
     static void* runner(void*);
     void run();
     static void append(const std::string& line);
+    void join();
+    static pthread_cond_t *queueNotEmpty;
+    void clean();
 
    private:
     static std::ofstream out;
     static std::deque<std::string> queue;
     static int threadCount;
-    static pthread_mutex_t lock;
-    static pthread_mutex_t lock2;
+    static pthread_t *writeThreads;
+    static pthread_mutex_t *lock;
+    static pthread_mutex_t *queueLock;
 };
 #endif

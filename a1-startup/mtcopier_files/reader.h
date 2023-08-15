@@ -38,11 +38,24 @@ class reader {
      * there may be other functions you need so declare them.
      **/
 
+    void join();
+    static bool ifReading();
+    static int getLineCount();
+    static void reduceLineCount();
+    void clean();
+
    private:
     static std::ifstream in;
     static int threadCount;
     static writer* theWriter;
-    static pthread_mutex_t lock;
+    static pthread_t *readThreads;
+    static bool stillReading;
+    static int count;
+    static pthread_mutex_t *lock;
+    static pthread_mutex_t *countLock;
+    static pthread_mutex_t *stillReadingLock;
+    static int finishedThreads;
+    static pthread_mutex_t *finishedThreadsLock;
     /**
      * There may be other private instance data you need so declare those here.
      **/
