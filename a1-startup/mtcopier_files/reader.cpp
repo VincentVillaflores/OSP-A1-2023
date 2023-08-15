@@ -82,17 +82,31 @@ void* reader::runner(void* arg) {
             getline(in,line);
 
             if (!line.empty()){
-                theWriter->append(line);
-                pthread_mutex_lock(countLock);
-                count++;
-                pthread_cond_signal(theWriter->queueNotEmpty);
-                pthread_mutex_unlock(countLock);
+                addLine(line);
             }
         }
         pthread_mutex_unlock(lock);
     }
 
+    awakenAllWriterThreads();
 
+    return nullptr; 
+}
+
+//adds line to writer queue
+//increases count by 1
+//awakens one writer thread
+void reader::addLine(std::string line){
+    theWriter->append(line);
+    pthread_mutex_lock(countLock);
+    count++;
+    pthread_cond_signal(theWriter->queueNotEmpty);
+    pthread_mutex_unlock(countLock);
+}
+
+//counts the number of reader threads that have finished
+//last thread will wake up all waiting writer threads
+void reader::awakenAllWriterThreads(){
     pthread_mutex_lock(finishedThreadsLock);
     finishedThreads++;
     if (finishedThreads == threadCount){
@@ -102,8 +116,6 @@ void* reader::runner(void* arg) {
         pthread_mutex_unlock(stillReadingLock);
     }
     pthread_mutex_unlock(finishedThreadsLock);
-
-    return nullptr; 
 }
 
 void reader::join(){

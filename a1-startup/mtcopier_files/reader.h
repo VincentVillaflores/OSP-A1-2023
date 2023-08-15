@@ -43,6 +43,8 @@ class reader {
     static int getLineCount();
     static void reduceLineCount();
     void clean();
+    static void awakenAllWriterThreads();
+    static void addLine(std::string line);
 
    private:
     static std::ifstream in;

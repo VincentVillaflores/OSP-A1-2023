@@ -71,16 +71,20 @@ void* writer::runner(void* arg) {
         }
 
         if (reader::getLineCount() != 0){
-            pthread_mutex_lock(queueLock);
-            out << queue.front() << std::endl;
-            queue.pop_front();
-            reader::reduceLineCount();
-            pthread_mutex_unlock(queueLock);
+            writeFrontLineInQueue();
         }
 
         pthread_mutex_unlock(lock);
     }
     return nullptr; 
+}
+
+void writer::writeFrontLineInQueue(){
+    pthread_mutex_lock(queueLock);
+    out << queue.front() << std::endl;
+    queue.pop_front();
+    reader::reduceLineCount();
+    pthread_mutex_unlock(queueLock);
 }
 
 void writer::append(const std::string& line) {
