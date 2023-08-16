@@ -9,8 +9,16 @@
 /* global variables if needed go here */
 int main(int argc, char** argv) {
     /* check command line arguments */
-    if (argc < 3) {
+    bool time = false;
+    if (argc != 3 && argc != 4) {
         std::cout<<"Please pass an input and output file!"<<std::endl;
+        return EXIT_FAILURE;
+    }
+    std::string str = "-t";
+    time = argv[3] == str;
+    if (argc == 4 && !time){
+        std::cerr<<"The only valid optional flag is -t!"<<std::endl;
+        return EXIT_FAILURE;
     }
     else {
         writer write(argv[2]);

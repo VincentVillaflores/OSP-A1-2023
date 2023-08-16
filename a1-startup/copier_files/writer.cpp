@@ -21,6 +21,7 @@ void writer::run() {
     }
     else {
         std::cerr << "Error: Outfile could not be opened" << std::endl;
+        exit(EXIT_FAILURE);
     }
 }
 
