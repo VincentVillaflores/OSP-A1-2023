@@ -63,14 +63,14 @@ void writer::run() {
 }
 
 void* writer::runner(void* arg) {
-    while(reader::ifReading() || reader::getLineCount() != 0){
+    while(reader::ifReading() || getQueueCount() != 0){
         pthread_mutex_lock(lock);
 
-        while(reader::getLineCount() == 0 && reader::ifReading()){
+        while(getQueueCount() == 0 && reader::ifReading()){
             pthread_cond_wait(queueNotEmpty, lock);
         }
 
-        if (reader::getLineCount() != 0){
+        if (getQueueCount() != 0){
             writeFrontLineInQueue();
         }
 
@@ -79,11 +79,17 @@ void* writer::runner(void* arg) {
     return nullptr; 
 }
 
+int writer::getQueueCount(){
+    pthread_mutex_lock(queueLock);
+    int c = queue.size();
+    pthread_mutex_unlock(queueLock);
+    return c;
+}
+
 void writer::writeFrontLineInQueue(){
     pthread_mutex_lock(queueLock);
     out << queue.front() << std::endl;
     queue.pop_front();
-    reader::reduceLineCount();
     pthread_mutex_unlock(queueLock);
 }
 

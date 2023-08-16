@@ -13,11 +13,9 @@ std::ifstream reader::in;
 int reader::threadCount = 0;
 writer *reader::theWriter;
 pthread_mutex_t *reader::lock;
-pthread_mutex_t *reader::countLock;
 pthread_mutex_t *reader::stillReadingLock;
 pthread_t *reader::readThreads;
 bool reader::stillReading;
-int reader::count = 0;
 int reader::finishedThreads = 0;
 pthread_mutex_t *reader::finishedThreadsLock;
 
@@ -29,12 +27,6 @@ void reader::init(const std::string& name, const int count, writer* myWriter){
 
     lock = new pthread_mutex_t;
     if (pthread_mutex_init(lock,0) != 0){
-        std::cerr<<"There was an error initialising pthread mutex"<<std::endl;
-        exit(EXIT_FAILURE);
-    }
-
-    countLock = new pthread_mutex_t;
-    if (pthread_mutex_init(countLock,0) != 0){
         std::cerr<<"There was an error initialising pthread mutex"<<std::endl;
         exit(EXIT_FAILURE);
     }
@@ -98,10 +90,7 @@ void* reader::runner(void* arg) {
 //awakens one writer thread
 void reader::addLine(std::string line){
     theWriter->append(line);
-    pthread_mutex_lock(countLock);
-    count++;
     pthread_cond_signal(theWriter->queueNotEmpty);
-    pthread_mutex_unlock(countLock);
 }
 
 //counts the number of reader threads that have finished
@@ -137,27 +126,10 @@ bool reader::ifReading(){
     return b;
 }
 
-int reader::getLineCount(){
-    pthread_mutex_lock(countLock);
-    int c = count;
-    pthread_mutex_unlock(countLock);
-    return c;
-}
-
-void reader::reduceLineCount(){
-    pthread_mutex_lock(countLock);
-    count--;
-    pthread_mutex_unlock(countLock);
-}
-
 void reader::clean(){
     if (lock){
         pthread_mutex_destroy(lock);
         delete(lock);
-    }
-    if (countLock){
-        pthread_mutex_destroy(countLock);
-        delete(countLock);
     }
     if (stillReadingLock){
         pthread_mutex_destroy(stillReadingLock);

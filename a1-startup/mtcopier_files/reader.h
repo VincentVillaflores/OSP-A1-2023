@@ -52,9 +52,7 @@ class reader {
     static writer* theWriter;
     static pthread_t *readThreads;
     static bool stillReading;
-    static int count;
     static pthread_mutex_t *lock;
-    static pthread_mutex_t *countLock;
     static pthread_mutex_t *stillReadingLock;
     static int finishedThreads;
     static pthread_mutex_t *finishedThreadsLock;

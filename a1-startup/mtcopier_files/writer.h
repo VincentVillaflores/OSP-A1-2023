@@ -28,6 +28,7 @@ class writer {
     static pthread_cond_t *queueNotEmpty;
     void clean();
     static void writeFrontLineInQueue();
+    static int getQueueCount();
 
    private:
     static std::ofstream out;
