@@ -37,7 +37,7 @@ int main(int argc, char** argv) {
         std::cout<<"Total Program Duration: "<<programDurationInSeconds<<" seconds." <<std::endl;
         clock_t totalReadDuration = 0;
         clock_t totalWriteDuration = 0;
-        for (std::size_t i = 0; timer->readLineStart.size(); i++){
+        for (std::size_t i = 0; i < timer->readLineStart.size(); i++){
             clock_t readDur = timer->readLineEnd[i] - timer->readLineStart[i];
             totalReadDuration += readDur;
             clock_t writeDur = timer->writeLineEnd[i] - timer->writeLineStart[i];
