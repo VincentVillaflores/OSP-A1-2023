@@ -40,8 +40,6 @@ class reader {
 
     void join();
     static bool ifReading();
-    static int getLineCount();
-    static void reduceLineCount();
     void clean();
     static void awakenAllWriterThreads();
     static void addLine(std::string line);
