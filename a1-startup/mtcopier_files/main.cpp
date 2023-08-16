@@ -4,6 +4,7 @@
  **/
 #include "reader.h"
 #include "writer.h"
+#include "../TimerStruct.h"
 #include <cstdlib>
 /**
  * these need to be global variables as you'll need handle cleaning them up in
@@ -36,7 +37,8 @@ int main(int argc, char** argv) {
      * check command line arguments
      **/
     int c = atoi(argv[1]); 
-    if (argc != 4) {
+    bool time = false;
+    if (argc != 4 && argc != 5) {
         std::cerr<<"Please pass a thread count, an input and output file! \n"<<std::endl;
         return EXIT_FAILURE;
         
@@ -62,7 +64,12 @@ int main(int argc, char** argv) {
     /**
      * process command line arguments
      **/
-    
+    std::string str = "-t";
+    time = argv[4] == str;
+    if (argc == 5 && !time){
+        std::cerr<<"The only valid optional flag is -t!"<<std::endl;
+        return EXIT_FAILURE;
+    }
     
     /**
      * initiliaze the reader and writer classes

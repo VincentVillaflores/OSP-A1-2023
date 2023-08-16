@@ -4,6 +4,7 @@
  **/
 #include "reader.h"
 #include "writer.h"
+#include "../TimerStruct.h"
 #include <cstdlib>
 /* global variables if needed go here */
 int main(int argc, char** argv) {

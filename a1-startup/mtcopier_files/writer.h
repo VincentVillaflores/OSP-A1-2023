@@ -3,6 +3,7 @@
  * Principles
  **/
 #include <pthread.h>
+#include "../TimerStruct.h"
 
 #include <deque>
 #include <fstream>

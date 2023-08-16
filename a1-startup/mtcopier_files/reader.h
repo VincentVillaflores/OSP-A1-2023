@@ -4,6 +4,7 @@
  **/
 #include <pthread.h>
 #include "writer.h"
+#include "../TimerStruct.h"
 #include <fstream>
 #include <iostream>
 #include <string>

@@ -3,6 +3,7 @@
  * Principles
  **/
 #include "writer.h"
+#include "../TimerStruct.h"
 #include <fstream>
 #include <iostream>
 #include <string>
