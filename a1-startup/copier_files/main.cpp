@@ -48,7 +48,7 @@ int main(int argc, char** argv) {
         int writeDurationInSeconds = (int) totalWriteDuration / (double) CLOCKS_PER_SEC;
         std::cout<<"Total Write Duration: "<<writeDurationInSeconds<<" seconds." <<std::endl;
         int totalOverheadDuration = programDurationInSeconds - readDurationInSeconds - writeDurationInSeconds;
-        std::cout<<"Total Overhead Duration: "<<writeDurationInSeconds<<" seconds." <<std::endl;
+        std::cout<<"Total Overhead Duration: "<<totalOverheadDuration<<" seconds." <<std::endl;
     }
     delete(timer);
     timer = nullptr;
