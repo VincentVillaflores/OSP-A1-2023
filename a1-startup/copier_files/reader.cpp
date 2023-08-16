@@ -9,11 +9,13 @@ reader::reader(const std::string& name, writer& mywriter) : thewriter(mywriter) 
     in.open(name);
 }
 
-void reader::run() {
+void reader::run(TimerStruct* timer) {
     if (in.is_open()) {
         std::string line;
         while (std::getline(in, line)){
+            timer->readLineStart.push_back(clock());
             thewriter.append(line);
+            timer->readLineEnd.push_back(clock());
         }
         in.close();
     }

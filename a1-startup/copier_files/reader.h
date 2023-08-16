@@ -16,7 +16,7 @@ class reader {
      */
     reader(const std::string& name, writer& mywriter);
     /* perform the reading from the file */
-    void run();
+    void run(TimerStruct* timer);
 
    private:
     std::ifstream in;

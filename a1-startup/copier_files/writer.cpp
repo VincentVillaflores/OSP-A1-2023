@@ -12,10 +12,12 @@ writer::writer(const std::string& name) {
     out.open(name);
 }
 
-void writer::run() {
+void writer::run(TimerStruct* timer) {
     if (out.is_open()){
         for (std::string line : queue){
+            timer->writeLineStart.push_back(clock());
             out << line << std::endl;
+            timer->writeLineEnd.push_back(clock());
         }
         out.close();
     }

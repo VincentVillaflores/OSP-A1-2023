@@ -18,7 +18,7 @@ class writer {
     /**
      * does the actual writing
      **/
-    void run();
+    void run(TimerStruct* timer);
     /**
      * appends a line from the file read in to be output ... needed by the
      * reader class
