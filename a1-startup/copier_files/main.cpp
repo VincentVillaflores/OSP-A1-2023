@@ -37,16 +37,24 @@ int main(int argc, char** argv) {
         std::cout<<"Total Program Duration: "<<programDurationInSeconds<<" seconds." <<std::endl;
         clock_t totalReadDuration = 0;
         clock_t totalWriteDuration = 0;
-        for (std::size_t i = 0; i < timer->readLineStart.size(); i++){
+        int totalLines = timer->readLineStart.size();
+        for (std::size_t i = 0; i < totalLines; i++){
             clock_t readDur = timer->readLineEnd[i] - timer->readLineStart[i];
             totalReadDuration += readDur;
             clock_t writeDur = timer->writeLineEnd[i] - timer->writeLineStart[i];
             totalWriteDuration += writeDur;
         }
+
         int readDurationInSeconds = (int) totalReadDuration / (double) CLOCKS_PER_SEC;
         std::cout<<"Total Read Duration: "<<readDurationInSeconds<<" seconds." <<std::endl;
+        int averageReadDurationInSeconds = readDurationInSeconds / totalLines;
+        std::cout<<"Average Read Duration: "<<averageReadDurationInSeconds<<" seconds." <<std::endl;
+
         int writeDurationInSeconds = (int) totalWriteDuration / (double) CLOCKS_PER_SEC;
         std::cout<<"Total Write Duration: "<<writeDurationInSeconds<<" seconds." <<std::endl;
+        int averageWriteDurationInSeconds = writeDurationInSeconds / totalLines;
+        std::cout<<"Average Write Duration: "<<averageWriteDurationInSeconds<<" seconds." <<std::endl;
+
         int totalOverheadDuration = programDurationInSeconds - readDurationInSeconds - writeDurationInSeconds;
         std::cout<<"Total Overhead Duration: "<<totalOverheadDuration<<" seconds." <<std::endl;
     }
