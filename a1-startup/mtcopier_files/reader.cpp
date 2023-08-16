@@ -86,7 +86,6 @@ void* reader::runner(void* arg) {
 }
 
 //adds line to writer queue
-//increases count by 1
 //awakens one writer thread
 void reader::addLine(std::string line){
     theWriter->append(line);
