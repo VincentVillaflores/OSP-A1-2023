@@ -23,19 +23,19 @@ void writer::init(const std::string& name, const int count) {
 
     queueNotEmpty = new pthread_cond_t;
     if (pthread_cond_init(queueNotEmpty,0) != 0){
-        printf("There was an error initialising pthread cond \n");
+        std::cerr<<"There was an error initialising pthread cond"<<std::endl;
         exit(EXIT_FAILURE);
     }
 
     lock = new pthread_mutex_t ;
     if (pthread_mutex_init(lock,0) != 0){
-        printf("There was an error initialising pthread mutex \n");
+        std::cerr<<"There was an error initialising pthread mutex \n"<<std::endl;
         exit(EXIT_FAILURE);
     }
 
     queueLock = new pthread_mutex_t;
     if (pthread_mutex_init(queueLock,0) != 0){
-        printf("There was an error initialising pthread mutex \n");
+        std::cerr<<"There was an error initialising pthread mutex"<<std::endl;
         exit(EXIT_FAILURE);
     }
 }
@@ -43,7 +43,7 @@ void writer::init(const std::string& name, const int count) {
 void writer::run() {
     writeThreads = (pthread_t*)malloc(threadCount * sizeof(pthread_t));
     if (!writeThreads){
-        printf("There was an error with malloc \n");
+        std::cerr<<"There was an error with malloc"<<std::endl;
         exit(EXIT_FAILURE);
     }
 
@@ -51,13 +51,13 @@ void writer::run() {
         for(int i = 0; i < threadCount; i++) {
             size_t tmp = i;
             if (pthread_create(&writeThreads[i], NULL, &runner, (void*) tmp) != 0){
-                printf("There was an error creating thread Number %d \n", i);
+                std::cerr<<"There was an error creating thread Number "<<i<<std::endl;
                 exit(EXIT_FAILURE);
             }
         }
     }
     else {
-        printf("Error: Outfile could not be opened \n");
+        std::cerr<<"Error: Outfile could not be opened"<<std::endl;
         exit(EXIT_FAILURE);
     }
 }
@@ -96,7 +96,7 @@ void writer::append(const std::string& line) {
 void writer::join(){
     for(int i = 0; i < threadCount; i++) {
         if (pthread_join(writeThreads[i], NULL) != 0){
-            printf("There was an error joining thread Number %d \n", i);
+            std::cerr<<"There was an error joining thread Number "<<i<<std::endl;
             exit(EXIT_FAILURE);
         }
     }

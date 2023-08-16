@@ -29,25 +29,25 @@ void reader::init(const std::string& name, const int count, writer* myWriter){
 
     lock = new pthread_mutex_t;
     if (pthread_mutex_init(lock,0) != 0){
-        printf("There was an error initialising pthread mutex \n");
+        std::cerr<<"There was an error initialising pthread mutex"<<std::endl;
         exit(EXIT_FAILURE);
     }
 
     countLock = new pthread_mutex_t;
     if (pthread_mutex_init(countLock,0) != 0){
-        printf("There was an error initialising pthread mutex \n");
+        std::cerr<<"There was an error initialising pthread mutex"<<std::endl;
         exit(EXIT_FAILURE);
     }
 
     stillReadingLock = new pthread_mutex_t;
     if (pthread_mutex_init(stillReadingLock,0) != 0){
-        printf("There was an error initialising pthread mutex \n");
+        std::cerr<<"There was an error initialising pthread mutex"<<std::endl;
         exit(EXIT_FAILURE);
     }
 
     finishedThreadsLock = new pthread_mutex_t;
     if (pthread_mutex_init(finishedThreadsLock,0) != 0){
-        printf("There was an error initialising pthread mutex \n");
+        std::cerr<<"There was an error initialising pthread mutex"<<std::endl;
         exit(EXIT_FAILURE);
     }
 }
@@ -56,20 +56,20 @@ void reader::run() {
     if (in.is_open()) {
         readThreads = (pthread_t*)malloc(threadCount * sizeof(pthread_t));
         if (!readThreads){
-            printf("There was an error with malloc \n");
+            std::cerr<<"There was an error with malloc"<<std::endl;
             exit(EXIT_FAILURE);
         }
 
         for (int i = 0; i < threadCount; i++){
             size_t tmp = i;
             if (pthread_create(&readThreads[i], NULL, &runner, (void *)tmp) != 0){
-                printf("There was an error creating thread Number %d \n", i);
+                std::cerr<<"There was an error creating thread Number "<<i<<std::endl;
                 exit(EXIT_FAILURE);
             }
         }
     }
     else {
-        printf("Error: Infile could not be opened \n");
+        std::cerr<<"Error: Infile could not be opened"<<std::endl;
         exit(EXIT_FAILURE);
     }
 }
@@ -121,7 +121,7 @@ void reader::awakenAllWriterThreads(){
 void reader::join(){
     for(int i = 0; i < threadCount; i++) {
     if (pthread_join(readThreads[i], NULL) != 0){
-        printf("There was an error joining thread Number %d \n", i);
+        std::cerr<<"There was an error joining thread Number "<<i<<std::endl;
         exit(EXIT_FAILURE);
         }   
     }
