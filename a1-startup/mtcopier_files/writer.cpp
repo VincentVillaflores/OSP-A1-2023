@@ -16,12 +16,10 @@ pthread_t *writer::writeThreads;
 pthread_cond_t *writer::queueNotEmpty;
 pthread_mutex_t *writer::lock;
 pthread_mutex_t *writer::queueLock;
-TimerStruct *writer::theTimer;
 
-void writer::init(const std::string& name, const int count, TimerStruct* timer) {
+void writer::init(const std::string& name, const int count) {
     out.open(name);
     threadCount = count;
-    theTimer = timer;
 
     queueNotEmpty = new pthread_cond_t;
     if (pthread_cond_init(queueNotEmpty,0) != 0){
@@ -73,9 +71,7 @@ void* writer::runner(void* arg) {
         }
 
         if (getQueueCount() != 0){
-            theTimer->writeLineStart.push_back(clock());
             writeFrontLineInQueue();
-            theTimer->writeLineEnd.push_back(clock());
         }
 
         pthread_mutex_unlock(lock);

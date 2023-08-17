@@ -4,7 +4,6 @@
  **/
 #include <pthread.h>
 #include "writer.h"
-#include "../TimerStruct.h"
 #include <fstream>
 #include <iostream>
 #include <string>
@@ -22,7 +21,7 @@ class reader {
      * file. There will be other things which you will need to figure out
      * as you complete the assignment.
      **/
-    static void init(const std::string& name, const int count, writer* myWriter, TimerStruct* timer);
+    static void init(const std::string& name, const int count, writer* myWriter);
 
     /**
      * the method that implements the thread. It has to be static as the first
@@ -55,7 +54,6 @@ class reader {
     static pthread_mutex_t *stillReadingLock;
     static int finishedThreads;
     static pthread_mutex_t *finishedThreadsLock;
-    static TimerStruct *theTimer;
     /**
      * There may be other private instance data you need so declare those here.
      **/
