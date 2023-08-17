@@ -18,12 +18,14 @@ pthread_t *reader::readThreads;
 bool reader::stillReading;
 int reader::finishedThreads = 0;
 pthread_mutex_t *reader::finishedThreadsLock;
+TimerStruct *reader::theTimer;
 
-void reader::init(const std::string& name, const int count, writer* myWriter){
+void reader::init(const std::string& name, const int count, writer* myWriter, TimerStruct* timer){
     in.open(name);
     threadCount = count;
     theWriter = myWriter;
     stillReading = true;
+    theTimer = timer;
 
     lock = new pthread_mutex_t;
     if (pthread_mutex_init(lock,0) != 0){
@@ -74,7 +76,9 @@ void* reader::runner(void* arg) {
             getline(in,line);
 
             if (!line.empty()){
+                theTimer->readLineStart.push_back(clock());
                 addLine(line);
+                theTimer->readLineEnd.push_back(clock());
             }
         }
         pthread_mutex_unlock(lock);
