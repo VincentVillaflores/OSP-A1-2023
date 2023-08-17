@@ -3,12 +3,11 @@
 
 #include <vector>
 #include <ctime>
+#include <time.h>
 
 struct TimerStruct {
-    std::vector<clock_t> readLineStart;
-    std::vector<clock_t> readLineEnd;
-    std::vector<clock_t> writeLineStart;
-    std::vector<clock_t> writeLineEnd;
+    std::vector<clock_t> readLineDuration;
+    std::vector<clock_t> writeLineDuration;
 };
 
 #endif // TIMERSTRUCT_H

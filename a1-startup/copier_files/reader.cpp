@@ -13,9 +13,11 @@ void reader::run(TimerStruct* timer) {
     if (in.is_open()) {
         std::string line;
         while (std::getline(in, line)){
-            timer->readLineStart.push_back(clock());
+            clock_t start = clock();
             thewriter.append(line);
-            timer->readLineEnd.push_back(clock());
+            clock_t end = clock();
+            clock_t dur = end - start;
+            timer->readLineDuration.push_back(dur);
         }
         in.close();
     }

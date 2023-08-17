@@ -15,9 +15,11 @@ writer::writer(const std::string& name) {
 void writer::run(TimerStruct* timer) {
     if (out.is_open()){
         for (std::string line : queue){
-            timer->writeLineStart.push_back(clock());
+            clock_t start = clock();
             out << line << std::endl;
-            timer->writeLineEnd.push_back(clock());
+            clock_t end = clock();
+            clock_t dur = end - start;
+            timer->writeLineDuration.push_back(dur);
         }
         out.close();
     }
