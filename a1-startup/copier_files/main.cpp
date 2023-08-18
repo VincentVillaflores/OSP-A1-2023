@@ -33,7 +33,7 @@ int main(int argc, char** argv) {
     clock_t programEnd = clock();
     if (time){
         clock_t programDuration = programEnd - programStart;
-        int programDurationInSeconds = (int) programDuration / (double) CLOCKS_PER_SEC;
+        long programDurationInSeconds = (long) programDuration / (double) CLOCKS_PER_SEC;
         std::cout<<"Total Program Duration: "<<programDurationInSeconds<<" seconds." <<std::endl;
         clock_t totalReadDuration = 0;
         clock_t totalWriteDuration = 0;
@@ -43,17 +43,17 @@ int main(int argc, char** argv) {
             totalWriteDuration += timer->writeLineDuration[i];
         }
 
-        int readDurationInSeconds = (int) totalReadDuration / (double) CLOCKS_PER_SEC;
+        long readDurationInSeconds = (long) totalReadDuration / (double) CLOCKS_PER_SEC;
         std::cout<<"Total Read Duration: "<<readDurationInSeconds<<" seconds." <<std::endl;
-        int averageReadDurationInSeconds = readDurationInSeconds / totalLines;
+        long averageReadDurationInSeconds = readDurationInSeconds / totalLines;
         std::cout<<"Average Read Duration: "<<averageReadDurationInSeconds<<" seconds." <<std::endl;
 
-        int writeDurationInSeconds = (int) totalWriteDuration / (double) CLOCKS_PER_SEC;
+        long writeDurationInSeconds = (long) totalWriteDuration / (double) CLOCKS_PER_SEC;
         std::cout<<"Total Write Duration: "<<writeDurationInSeconds<<" seconds." <<std::endl;
-        int averageWriteDurationInSeconds = writeDurationInSeconds / totalLines;
+        long averageWriteDurationInSeconds = writeDurationInSeconds / totalLines;
         std::cout<<"Average Write Duration: "<<averageWriteDurationInSeconds<<" seconds." <<std::endl;
 
-        int totalOverheadDuration = programDurationInSeconds - readDurationInSeconds - writeDurationInSeconds;
+        long totalOverheadDuration = programDurationInSeconds - readDurationInSeconds - writeDurationInSeconds;
         std::cout<<"Total Overhead Duration: "<<totalOverheadDuration<<" seconds." <<std::endl;
     }
     delete(timer);
