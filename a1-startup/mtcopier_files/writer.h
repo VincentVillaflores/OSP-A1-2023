@@ -3,7 +3,7 @@
  * Principles
  **/
 #include <pthread.h>
-
+#include"../TimerStruct.h"
 #include <deque>
 #include <fstream>
 #include <iostream>
@@ -20,7 +20,7 @@ class writer {
      * needs to be static. You can pass in instances into the function as
      * pointers though.
      **/
-    static void init(const std::string& name, const int count);
+    static void init(const std::string& name, const int count, TimerStruct* timer);
     static void* runner(void*);
     void run();
     static void append(const std::string& line);
@@ -37,5 +37,6 @@ class writer {
     static pthread_t *writeThreads;
     static pthread_mutex_t *lock;
     static pthread_mutex_t *queueLock;
+    static TimerStruct *thisTimer;
 };
 #endif

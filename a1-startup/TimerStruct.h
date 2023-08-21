@@ -8,6 +8,7 @@
 struct TimerStruct {
     std::vector<clock_t> readLineDuration;
     std::vector<clock_t> writeLineDuration;
+    std::vector<clock_t>readLineWaitDuration;
 };
 
 #endif // TIMERSTRUCT_H
